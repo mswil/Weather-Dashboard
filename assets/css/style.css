@@ -5,6 +5,11 @@ header {
 }
 
 .card {
-    background-color: #33465b;
-    color: white;
+  background-color: #33465b;
+  color: white;
+}
+
+.weather-icon {
+  height: 50px;
+  margin: -10px 0;
 }
