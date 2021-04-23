@@ -14,8 +14,79 @@
 
 <body>
 
+    <header class="text-center mb-3 py-2">
+        <h1>
+            Weather Dashboard
+        </h1>
+    </header>
+
+
+    <div class="mx-4">
+        <div class="row">
+            <div id="search-el" class="col-3 input-group d-block">
+                <div>
+                    <label for="city-search" class="font-weight-bold h2">Search for a City:</label>
+                    <div class="input-group">
+                        <input type="text" name="city-search" id="city-search" placeholder="Prosper"
+                            class="form-control mb-3">
+                    </div>
+                    <div class="input-group">
+                        <input type="submit" value="Search" class="form-control text-white bg-primary">
+                    </div>
+                </div>
+
+                <hr>
+
+                <div id="search-history">
+                    
+                </div>
+
+                <script id="search-history-template" type="text/x-custom-template">
+                    <div class="input-group mb-2">
+                        <input type="button" value="" class="form-control">
+                    </div>
+                </script>
+            </div>
+
+            <div class="col">
+                <div class="container">
+                    <div id="todays-forcast" class="row border d-block mb-3 p-2">
+                        <h2 class="font-weight-bold"><span id="city">City</span> (<span id="date">Date</span>) <span id="weather-icon">☁️</span>
+                        </h2>
+                        <h6>Temp: <span id="today-tempurature">temp</span></h6>
+                        <h6>Wind: <span id="today-wind">speed</span></h6>
+                        <h6>Humidity: <span id="today-humidity">wet</span></h6>
+                        <h6>UV Index: <span id="today-uv-index" class="badge">sunny</span></h6>
+                    </div>
+
+                    <div class="row d-block">
+                        <h2 class="font-weight-bold">5 Day Forcast:</h2>
+                        <div class="container">
+                            <div class="row d-flex justify-content-between" id="weekly-forcast">
+
+                            </div>
+
+                            <script id="weekly-forcast-template" type="text/x-custom-template">
+                                <div class="card rounded-0" style="width: 13rem;">
+                                    <div class="card-body p-2">
+                                        <h5>Date</h5>
+                                        <h6>icon</h6>
+                                        <h6>temp</h6>
+                                        <h6>wind</h6>
+                                        <h6>humidity</h6>
+                                    </div>
+                                </div>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="./assets/js/script.js"></script>
 </html>
