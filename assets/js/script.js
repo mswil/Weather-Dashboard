@@ -19,7 +19,8 @@ const getLatAndLon = function (city) {
             }
         })
         .catch(function (error) {
-            console.log(error);
+            console.error(error);
+            alert("Something went wrong. Please try again");
         });
 
 };
@@ -33,14 +34,16 @@ const getWeather = function (cityData) {
                 response.json().then(function (data) {
                     showForecast(data, cityData.name);
                     saveCities(cityData.name);
+                    showSearchHistory(loadCities());
                 })
             }
             else {
-                console.log("Onecall fail: " + status);
+                console.log("Onecall failed");
             }
         })
         .catch(function (error) {
-            console.log(error);
+            console.error(error);
+            alert("Something went wrong. Please try again");
         });
 
 };
@@ -124,13 +127,25 @@ const loadCities = function () {
     return savedCities;
 }
 
-const showSearchHistory = function () {
+const showSearchHistory = function (cities) {
+    $("#search-history").empty();
 
+    for (let city of cities) {
+        const template = $($("#search-history-template").html());
+
+        template.find("button").text(city);
+        template.find("button").on("click", function (event) {
+            getLatAndLon(event.target.textContent);
+        });
+        
+        $("#search-history").append(template);
+    }
 };
+
+showSearchHistory(loadCities());
 
 $("#search-form").on("submit", function (event) {
     event.preventDefault();
-    console.log(event);
 
     const city = $("#city-search").val();
     if (!city) {
