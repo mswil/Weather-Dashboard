@@ -50,34 +50,34 @@
 
             <div class="col">
                 <div class="container">
-                    <div id="todays-forcast" class="row border d-block mb-3 p-2">
+                    <div id="todays-forecast" class="row border d-block mb-3 p-2">
 
                     </div>
 
-                    <script id="todays-forcast-template" type="text/x-custom-template">
-                        <h2 class="font-weight-bold"><span id="city">City</span> (<span id="date">Date</span>) <img class="weather-icon" id="weather-icon"></img>
+                    <script id="todays-forecast-template" type="text/x-custom-template" class="today">
+                        <h2 class="font-weight-bold"><span id="city">City</span> (<span id="date">Date</span>) <img class="weather-icon"></img>
                         </h2>
-                        <h6>Temp: <span id="today-tempurature">temp</span></h6>
-                        <h6>Wind: <span id="today-wind">speed</span></h6>
-                        <h6>Humidity: <span id="today-humidity">wet</span></h6>
-                        <h6>UV Index: <span id="today-uv-index" class="badge">sunny</span></h6>
+                        <h6>Temp: <span class="tempurature">temp</span> °F</h6>
+                        <h6>Wind: <span class="wind">speed</span> MPH</h6>
+                        <h6>Humidity: <span class="humidity">wet</span> %</h6>
+                        <h6>UV Index: <span class="uv-index" class="badge">sunny</span></h6>
                     </script>
 
                     <div class="row d-block">
-                        <h2 class="font-weight-bold">5 Day Forcast:</h2>
+                        <h2 class="font-weight-bold">5 Day forecast:</h2>
                         <div class="container">
-                            <div class="row d-flex justify-content-between" id="weekly-forcast">
+                            <div class="row d-flex justify-content-between" id="weekly-forecast">
 
                             </div>
 
-                            <script id="weekly-forcast-template" type="text/x-custom-template">
+                            <script id="weekly-forecast-template" type="text/x-custom-template">
                                 <div class="card rounded-0" style="width: 13rem;">
                                     <div class="card-body p-2">
-                                        <h5>Date</h5>
-                                        <h6>icon</h6>
-                                        <h6>temp</h6>
-                                        <h6>wind</h6>
-                                        <h6>humidity</h6>
+                                        <h5 class="date font-weight-bold"></h5>
+                                        <img class="weather-icon"></img>
+                                        <h6 class="my-2">Temp: <span class="tempurature"></span> °F</h6>
+                                        <h6 class="mb-2">Wind: <span class="wind"></span> MPH</h6>
+                                        <h6 class="mb-2">Humidity: <span class="humidity"></span> %</h6>
                                     </div>
                                 </div>
                             </script>
@@ -90,7 +90,6 @@
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 

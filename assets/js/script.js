@@ -5,9 +5,6 @@ const getWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?";
 const apiTemperatureUnitF = "&units=imperial";
 const apiKey = "&appid=0e6224d44e597d1d9ed03b3b207fc815"
 
-//get lat and lon from 1st api call weather?q=
-//get atcual weater data from 2nd onecall?lat={}&lon={}
-
 const getLatAndLon = function (city) {
     fetch(getCityURL + city + apiKey)
         .then(function (response) {
@@ -27,13 +24,13 @@ const getLatAndLon = function (city) {
 };
 
 const getWeather = function (cityData) {
-    fetch(getWeatherURL 
+    fetch(getWeatherURL
         + "lat=" + cityData.coord.lat + "&lon=" + cityData.coord.lon
         + apiTemperatureUnitF + "&exclude=hourly,minutely" + apiKey)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    showWeather(data, cityData.name);
+                    showForecast(data, cityData.name);
                 })
             }
             else {
@@ -46,33 +43,52 @@ const getWeather = function (cityData) {
 
 };
 
-const showWeather = function (cityData, city) {
-    showTodaysForcast(cityData, city);
-    show5DayForcast(cityData);
+const showForecast = function (cityData, city) {
+    showTodaysForecast(cityData.current, city);
+    for (let i = 1; i <= 5; i++) {
+        showFutureForecast(cityData.daily[i]);
+    }
 
 }
 
-const showTodaysForcast = function (cityData, city) {
-    $("#todays-forcast").empty();
+const showTodaysForecast = function (currentData, city) {
+    $("#todays-forecast").empty();
 
-    const template = $($("#todays-forcast-template").html());
+    const template = $($("#todays-forecast-template").html());
 
     template.find("#city").text(city);
-    template.find("#date").text(moment().format("l"));
-    template.find("#weather-icon").attr("src", "http://openweathermap.org/img/wn/" + cityData.current.weather[0].icon + ".png");
+    template.find("#date").text(calculateDate(currentData.dt));
+    template.find(".weather-icon").attr("src", "http://openweathermap.org/img/wn/" + currentData.weather[0].icon + ".png");
 
-    template.find("#today-tempurature").text(cityData.current.temp);
-    template.find("#today-wind").text(cityData.current.wind_speed);
-    template.find("#today-humidity").text(cityData.current.humidity);
-    template.find("#today-uv-index").text(cityData.current.uvi);
+    template.find(".tempurature").text(currentData.temp);
+    template.find(".wind").text(currentData.wind_speed);
+    template.find(".humidity").text(currentData.humidity);
+    template.find(".uv-index").text(currentData.uvi);
 
-    $("#todays-forcast").append(template);
+    $("#todays-forecast").append(template);
+
+};
+
+const showFutureForecast = function (futureData) {
+    $("#weekly-forecast").empty();
+
+    const template = $($("#weekly-forecast-template").html());
+
+    template.find(".date").text(calculateDate(futureData.dt));
+    template.find(".weather-icon").attr("src", "http://openweathermap.org/img/wn/" + futureData.weather[0].icon + ".png");
+    template.find(".tempurature").text(futureData.temp.day);
+    template.find(".wind").text(futureData.wind_speed);
+    template.find(".humidity").text(futureData.humidity);
+
+    $("#weekly-forecast").append(template);
 
 };
 
-const show5DayForcast = function (cityData) {
-
-};
+const calculateDate = function (dt) {
+    const date = new Date(dt * 1000);
+    strDate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
+    return strDate;
+}
 
 $("#search-btn").on("click", function (event) {
     // event.preventDefault();
