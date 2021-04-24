@@ -44,6 +44,7 @@ const getWeather = function (cityData) {
 };
 
 const showForecast = function (cityData, city) {
+    $("#forecast").removeClass("d-none");
     showTodaysForecast(cityData.current, city);
     for (let i = 1; i <= 5; i++) {
         showFutureForecast(cityData.daily[i]);
@@ -100,8 +101,6 @@ const calculateDate = function (dt) {
     strDate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
     return strDate;
 }
-
-getLatAndLon("prosper");
 
 $("#search-btn").on("click", function (event) {
     // event.preventDefault();
