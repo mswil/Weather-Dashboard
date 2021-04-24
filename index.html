@@ -25,14 +25,18 @@
         <div class="row">
             <div id="search-el" class="col-3 input-group d-block">
                 <div>
-                    <label for="city-search" class="font-weight-bold h2">Search for a City:</label>
-                    <div class="input-group">
-                        <input type="text" name="city-search" id="city-search" placeholder="Prosper"
-                            class="form-control mb-3">
-                    </div>
-                    <div class="input-group">
-                        <input id="search-btn" type="button" value="Search" class="form-control text-white bg-primary">
-                    </div>
+                    <form id="search-form">
+                        <label for="city-search" class="font-weight-bold h2">Search for a City:</label>
+                        <div class="input-group">
+                            <input type="text" name="city-search" id="city-search" placeholder="City Name"
+                                class="form-control mb-3">
+                        </div>
+                        <div class="input-group">
+                            <button type="submit"
+                                class="form-control text-white bg-primary">Search</button>
+                        </div>
+                    </form>
+
                 </div>
 
                 <hr>
@@ -43,7 +47,7 @@
 
                 <script id="search-history-template" type="text/x-custom-template">
                     <div class="input-group mb-2">
-                        <input type="button" value="" class="form-control">
+                        <button type="button" class="form-control">City</button>
                     </div>
                 </script>
             </div>

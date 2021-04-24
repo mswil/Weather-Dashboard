@@ -11,6 +11,7 @@ const getLatAndLon = function (city) {
             if (response.ok) {
                 response.json().then(function (data) {
                     getWeather(data);
+                    $("#city-search").val("");
                 })
             }
             else {
@@ -127,8 +128,9 @@ const showSearchHistory = function () {
 
 };
 
-$("#search-btn").on("click", function (event) {
-    // event.preventDefault();
+$("#search-form").on("submit", function (event) {
+    event.preventDefault();
+    console.log(event);
 
     const city = $("#city-search").val();
     if (!city) {
