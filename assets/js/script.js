@@ -63,7 +63,18 @@ const showTodaysForecast = function (currentData, city) {
     template.find(".tempurature").text(currentData.temp);
     template.find(".wind").text(currentData.wind_speed);
     template.find(".humidity").text(currentData.humidity);
+
     template.find(".uv-index").text(currentData.uvi);
+
+    if(currentData.uvi < 3) {
+        template.find(".uv-index").addClass("badge-success");
+    }
+    else if(currentData.uvi >=3 && currentData.uvi < 6) {
+        template.find(".uv-index").addClass("badge-warning");
+    }
+    else {
+        template.find(".uv-index").addClass("badge-danger");
+    }
 
     $("#todays-forecast").append(template);
 
@@ -90,6 +101,8 @@ const calculateDate = function (dt) {
     return strDate;
 }
 
+getLatAndLon("prosper");
+
 $("#search-btn").on("click", function (event) {
     // event.preventDefault();
 
@@ -99,3 +112,4 @@ $("#search-btn").on("click", function (event) {
     //TODO: add city to search history
 
 });
+
