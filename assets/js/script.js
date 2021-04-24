@@ -14,7 +14,7 @@ const getLatAndLon = function (city) {
                 })
             }
             else {
-                console.log("Success: " + status);
+                alert("Please enter a VALID city name");
             }
         })
         .catch(function (error) {
@@ -34,7 +34,7 @@ const getWeather = function (cityData) {
                 })
             }
             else {
-                console.log("Success: " + status);
+                console.log("Onecall fail: " + status);
             }
         })
         .catch(function (error) {
@@ -44,6 +44,9 @@ const getWeather = function (cityData) {
 };
 
 const showForecast = function (cityData, city) {
+    $("#todays-forecast").empty();
+    $("#weekly-forecast").empty();
+
     $("#forecast").removeClass("d-none");
     showTodaysForecast(cityData.current, city);
     for (let i = 1; i <= 5; i++) {
@@ -53,7 +56,6 @@ const showForecast = function (cityData, city) {
 }
 
 const showTodaysForecast = function (currentData, city) {
-    $("#todays-forecast").empty();
 
     const template = $($("#todays-forecast-template").html());
 
@@ -67,10 +69,10 @@ const showTodaysForecast = function (currentData, city) {
 
     template.find(".uv-index").text(currentData.uvi);
 
-    if(currentData.uvi < 3) {
+    if (currentData.uvi < 3) {
         template.find(".uv-index").addClass("badge-success");
     }
-    else if(currentData.uvi >=3 && currentData.uvi < 6) {
+    else if (currentData.uvi >= 3 && currentData.uvi < 6) {
         template.find(".uv-index").addClass("badge-warning");
     }
     else {
@@ -82,7 +84,6 @@ const showTodaysForecast = function (currentData, city) {
 };
 
 const showFutureForecast = function (futureData) {
-    $("#weekly-forecast").empty();
 
     const template = $($("#weekly-forecast-template").html());
 
@@ -106,7 +107,12 @@ $("#search-btn").on("click", function (event) {
     // event.preventDefault();
 
     const city = $("#city-search").val();
-    getLatAndLon(city);
+    if (!city) {
+        alert("Please enter the name of a city");
+    }
+    else {
+        getLatAndLon(city);
+    }
 
     //TODO: add city to search history
 
