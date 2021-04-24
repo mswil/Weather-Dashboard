@@ -31,6 +31,7 @@ const getWeather = function (cityData) {
             if (response.ok) {
                 response.json().then(function (data) {
                     showForecast(data, cityData.name);
+                    saveCities(cityData.name);
                 })
             }
             else {
@@ -102,6 +103,29 @@ const calculateDate = function (dt) {
     strDate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
     return strDate;
 }
+
+const saveCities = function (city) {
+    const savedCities = loadCities();
+
+    if (!savedCities.includes(city)) {
+        savedCities.push(city);
+        localStorage.setItem("cities", JSON.stringify(savedCities))
+    }
+}
+
+const loadCities = function () {
+    let savedCities = localStorage.getItem("cities");
+    if (!savedCities) {
+        return [];
+    }
+
+    savedCities = JSON.parse(savedCities);
+    return savedCities;
+}
+
+const showSearchHistory = function () {
+
+};
 
 $("#search-btn").on("click", function (event) {
     // event.preventDefault();
