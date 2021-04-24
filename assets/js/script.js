@@ -1,8 +1,10 @@
 
+//weather can search by city, but does not have uv-index info
 const getCityURL = "https://api.openweathermap.org/data/2.5/weather?q=";
+//onecall cannot search by city, but has uv-index info
 const getWeatherURL = "https://api.openweathermap.org/data/2.5/onecall?";
 
-const apiTemperatureUnitF = "&units=imperial";
+const apiParameters = "&units=imperial&exclude=hourly,minutely";
 const apiKey = "&appid=0e6224d44e597d1d9ed03b3b207fc815"
 
 const getLatAndLon = function (city) {
@@ -22,13 +24,10 @@ const getLatAndLon = function (city) {
             console.error(error);
             alert("Something went wrong. Please try again");
         });
-
 };
 
 const getWeather = function (cityData) {
-    fetch(getWeatherURL
-        + "lat=" + cityData.coord.lat + "&lon=" + cityData.coord.lon
-        + apiTemperatureUnitF + "&exclude=hourly,minutely" + apiKey)
+    fetch(getWeatherURL + "lat=" + cityData.coord.lat + "&lon=" + cityData.coord.lon + apiParameters + apiKey)
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
@@ -38,14 +37,13 @@ const getWeather = function (cityData) {
                 })
             }
             else {
-                console.log("Onecall failed");
+                alert("Something went wrong. Please try a different city");
             }
         })
         .catch(function (error) {
             console.error(error);
             alert("Something went wrong. Please try again");
         });
-
 };
 
 const showForecast = function (cityData, city) {
@@ -57,7 +55,6 @@ const showForecast = function (cityData, city) {
     for (let i = 1; i <= 5; i++) {
         showFutureForecast(cityData.daily[i]);
     }
-
 }
 
 const showTodaysForecast = function (currentData, city) {
@@ -65,7 +62,7 @@ const showTodaysForecast = function (currentData, city) {
     const template = $($("#todays-forecast-template").html());
 
     template.find("#city").text(city);
-    template.find("#date").text(calculateDate(currentData.dt));
+    template.find("#date").text(formatDate(currentData.dt));
     template.find(".weather-icon").attr("src", "http://openweathermap.org/img/wn/" + currentData.weather[0].icon + ".png");
 
     template.find(".tempurature").text(currentData.temp);
@@ -85,24 +82,22 @@ const showTodaysForecast = function (currentData, city) {
     }
 
     $("#todays-forecast").append(template);
-
 };
 
 const showFutureForecast = function (futureData) {
 
     const template = $($("#weekly-forecast-template").html());
 
-    template.find(".date").text(calculateDate(futureData.dt));
+    template.find(".date").text(formatDate(futureData.dt));
     template.find(".weather-icon").attr("src", "http://openweathermap.org/img/wn/" + futureData.weather[0].icon + ".png");
     template.find(".tempurature").text(futureData.temp.day);
     template.find(".wind").text(futureData.wind_speed);
     template.find(".humidity").text(futureData.humidity);
 
     $("#weekly-forecast").append(template);
-
 };
 
-const calculateDate = function (dt) {
+const formatDate = function (dt) {
     const date = new Date(dt * 1000);
     strDate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear();
     return strDate;
@@ -137,7 +132,7 @@ const showSearchHistory = function (cities) {
         template.find("button").on("click", function (event) {
             getLatAndLon(event.target.textContent);
         });
-        
+
         $("#search-history").append(template);
     }
 };
@@ -154,8 +149,5 @@ $("#search-form").on("submit", function (event) {
     else {
         getLatAndLon(city);
     }
-
-    //TODO: add city to search history
-
 });
 
